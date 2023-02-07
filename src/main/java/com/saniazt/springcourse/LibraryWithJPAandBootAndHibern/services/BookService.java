@@ -64,6 +64,7 @@ public class BookService {
     public Optional<Book> findByOwner(int id){
         return bookRepository.findById(id);
     }
+    @Transactional
     public void release(int id) {
         bookRepository.findById(id).ifPresent(
                 book -> {
