@@ -1,5 +1,6 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.controllers;
 
+import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.BookDAO;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.BookRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.PeopleRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.BookService;
@@ -22,15 +23,17 @@ public class BooksController {
     private final BookRepository bookRepository;
     private final BookService bookService;
     private final PeopleService peopleService;
+    private final BookDAO bookDAO;
 
 
 
     @Autowired
-    public BooksController(PeopleRepository peopleRepository, BookRepository bookRepository, BookService bookService, PeopleService peopleService) {
+    public BooksController(PeopleRepository peopleRepository, BookRepository bookRepository, BookService bookService, PeopleService peopleService, BookDAO bookDAO) {
         this.peopleRepository = peopleRepository;
         this.bookRepository = bookRepository;
         this.bookService = bookService;
         this.peopleService = peopleService;
+        this.bookDAO = bookDAO;
     }
 
 
@@ -118,7 +121,8 @@ public class BooksController {
     }
     @PostMapping("/search")
     public String makeSearchPage(Model model, @RequestParam("query") String query){
-        model.addAttribute("books", bookService.searchByTitleNam(query));
+      //  model.addAttribute("books", bookService.searchByTitleNam(query));
+       model.addAttribute("books", bookDAO.findByTitleOfBooks(query));
         return "books/search";
     }
 }

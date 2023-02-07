@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,7 +22,12 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
     public List<Person> findAll(){
-        return peopleRepository.findAll();
+        return peopleRepository.findAll().stream().sorted(new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return Integer.compare(o1.getId(), o2.getId());
+            }
+        }).collect(Collectors.toList());
     }
     public Person findOne(int id){
         Optional<Person> foundedPerson = peopleRepository.findById(id);

@@ -1,4 +1,5 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services;
+import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.BookDAO;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models.Book;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models.Person;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.BookRepository;
@@ -17,11 +18,13 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BookService {
     private final BookRepository bookRepository;
+    private final BookDAO bookDAO;
 
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, BookDAO bookDAO) {
         this.bookRepository = bookRepository;
+        this.bookDAO = bookDAO;
     }
 
     public List<Book> findAll(boolean sortByYear){
@@ -44,7 +47,8 @@ public class BookService {
             return bookRepository.findAll(PageRequest.of(page, bookPerPage)).getContent();
     }
     public List<Book> searchByTitleNam(String query){
-        return bookRepository.searchByTitle(query);
+       // return bookRepository.searchByTitle(query);
+         return bookDAO.findByTitleOfBooks(query);
     }
 
     @Transactional

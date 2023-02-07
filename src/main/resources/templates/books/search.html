@@ -19,10 +19,14 @@
     </div>
 
     <div th:each="book : ${books}">
-        <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</p>
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
 
         <div th:if="${book.getOwner() != null}">
             <span>The book is now assigned: </span> <span th:text="${book.getOwner().getFullName()}">Person Name</span>
+            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+                <input type="submit" value="Release the book!"/>
+            </form>
         </div>
 
         <div th:if="${book.getOwner() == null}">
