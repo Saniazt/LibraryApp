@@ -1,8 +1,6 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 
 import javax.persistence.*;
@@ -24,6 +22,7 @@ public class Person {
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
+
 
     // Конструктор по умолчанию нужен для Spring
     public Person() {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,14 +65,20 @@ public class BookService {
         return bookRepository.findById(id);
     }
     public void release(int id) {
-        bookRepository.findById(id);
-    }
-    public void assign(int id, Person selectedPerson ){
-        bookRepository.findById(id);
+        bookRepository.findById(id).ifPresent(
+                book -> {
+                    book.setOwner(null);
+                    book.setTakenAt(null);
+                });
     }
     @Transactional
-    public void disappoint(int id){
-        bookRepository.findById(id);
+    public void assign(int id, Person selectedPerson) {
+        bookRepository.findById(id).ifPresent(
+                book -> {
+                    book.setOwner(selectedPerson);
+                    book.setTakenAt(new Date()); // текущее время
+                }
+        );
     }
 
     public Person getBookOwner(int id) {

@@ -80,7 +80,7 @@ public class BooksController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("book", bookRepository.findAll());
+        model.addAttribute("book", bookService.findOne(id));
         return "books/edit";
     }
 
@@ -107,9 +107,11 @@ public class BooksController {
 
     @PatchMapping("/{id}/assign")
     public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
-        bookService.assign(id,selectedPerson);
+        // У selectedPerson назначено только поле id, остальные поля - null
+        bookService.assign(id, selectedPerson);
         return "redirect:/books/" + id;
     }
+
     @GetMapping("/search")
     public String searchPage(){
         return "books/search";
