@@ -9,18 +9,18 @@
 <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
 
 <div th:if="${books.isEmpty()}">
-    <p>Человек пока не взял ни одной книги</p>
+    <p>Person hasn't picked up any books yet</p>
     <hr/>
 </div>
 
 <div th:if="${!books.isEmpty()}">
     <hr/>
-    <b>Книги:</b>
+    <b>Books:</b>
     <br/>
     <table th:each="book : ${books}">
         <tr>
             <td>
-                <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()+', taken at:'+book.getTakenAt()}"
+                <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()+', taken at: '+ book.getTakenAt()}"
                       th:style="${book.isExpired()} ? 'color: red' : 'color: black'">
                     book
                 </span>
@@ -31,11 +31,11 @@
 </div>
 
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-    <input type="submit" value="Редактировать"/>
+    <input type="submit" value="Edit"/>
 </form>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-    <input type="submit" value="Удалить"/>
+    <input type="submit" value="Delete"/>
 </form>
 
 </body>
