@@ -3,6 +3,8 @@ package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models;
 
 
 
+import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleService;
+
 import javax.persistence.*;
 import java.util.List;
 

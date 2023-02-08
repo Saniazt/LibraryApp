@@ -29,6 +29,11 @@
     </table>
     <hr/>
 </div>
+<div th:if="${!expired.isEmpty()}">
+    <hr/>
+    <b>Total books taken :</b> <span th:text="${expired[0]}"></span>
+    <b>Total expired :</b> <span th:text="${expired[1]}"></span>
+    <br/>
 
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
     <input type="submit" value="Edit"/>
@@ -37,6 +42,6 @@
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
-
+</div>
 </body>
 </html>

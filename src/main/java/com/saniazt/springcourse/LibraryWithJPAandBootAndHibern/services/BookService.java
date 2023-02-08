@@ -88,6 +88,7 @@ public class BookService {
 
     public Person getBookOwner(int id) {
         return bookRepository.findById(id).map(Book::getOwner).orElse(null);
-
     }
+
+
 }
