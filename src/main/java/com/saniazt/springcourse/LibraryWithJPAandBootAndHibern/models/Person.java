@@ -7,6 +7,7 @@ import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleSe
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "person")
@@ -70,8 +71,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "fullName='" + fullName + '\'' +
-                '}';
+        return  fullName;
+    }
+    public List<String> stringOfBooks(){
+        return books.stream().map(a->a.getTitle()).collect(Collectors.toList());
     }
 }

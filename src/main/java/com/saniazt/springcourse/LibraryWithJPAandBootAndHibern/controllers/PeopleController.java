@@ -1,5 +1,6 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.controllers;
 
+import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.PersonDAO;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ public class PeopleController {
 
 
     private final PeopleService peopleService;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, PersonDAO personDAO) {
         this.peopleService = peopleService;
+        this.personDAO = personDAO;
     }
 
 
@@ -74,5 +77,15 @@ public class PeopleController {
     public String delete(@PathVariable("id") int id) {
         peopleService.delete(id);
         return "redirect:/people";
+    }
+    @GetMapping("/search")
+    public String searchPage(){
+        return "people/search";
+    }
+    @PostMapping("/search")
+    public String makeSearchPage(Model model, @RequestParam("query") String query){
+        //  model.addAttribute("books", bookService.searchByTitleNam(query));
+        model.addAttribute("people", personDAO.findByPersonName(query));
+        return "people/search";
     }
 }

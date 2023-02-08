@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/people/search}">
+    <label for="query">Enter search parameters </label>
+    <input type="text" id="query" name="query"/>
+    <br/>
+    <input type="submit" value="Search!"/>
+</form>
+<a href="/people">Return to people</a>
+</br>
+<a href="/books">Return to books</a>
+</br>
+<hr>
+<div th:if="${people}">
+    <div th:if="${people.isEmpty()}">
+        <span>No person found</span>
+    </div>
+
+    <div th:each="person : ${people}">
+        <a th:href="@{/people/{id}(id=${person.getId()})}"
+           th:text="${person.getFullName()}">person</a>
+        <a th:text="${person.stringOfBooks()}">person</a>
+    </div>
+
+        <hr/>
+
+</div>></body>
+</html>
