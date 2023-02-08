@@ -26,7 +26,7 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @Min(value = 1500, message = "Год должен быть больше, чем 1500")
+    @Min(value = 1500, message = "Year should be greater then 1500")
     @Column(name = "year")
     private int year;
 
