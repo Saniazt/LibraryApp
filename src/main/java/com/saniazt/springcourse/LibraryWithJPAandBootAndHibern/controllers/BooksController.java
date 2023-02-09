@@ -130,7 +130,7 @@ public class BooksController {
 
     @GetMapping("/expired")
     public String expiredBooks(Model model){
-        model.addAttribute("expiredBooks",bookRepository.findAll());
+        model.addAttribute("expiredBooks",bookService.findExpired());
         return "books/expired";
     }
 }

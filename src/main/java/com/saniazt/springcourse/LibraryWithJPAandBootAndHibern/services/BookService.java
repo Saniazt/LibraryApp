@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -90,5 +92,17 @@ public class BookService {
         return bookRepository.findById(id).map(Book::getOwner).orElse(null);
     }
 
-
+    public List<Book> findExpired(){
+       List<Book> allBooks = bookRepository.findAll().stream().toList();
+       List<Book> expiredBooks = new ArrayList<>();
+       long currentTime =  new Date().getTime();
+       for(int i=0;i<allBooks.size();i++){
+           long takenTime = allBooks.get(i).getTakenAt().getTime();
+           long so = currentTime-takenTime;
+           if (so>82800000) {
+               expiredBooks.add(allBooks.get(i));
+               allBooks.get(i).setExpired(true);
+           } // allBooks.get(i).setExpired(true);
+       } return expiredBooks;
+    }
 }

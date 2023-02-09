@@ -70,7 +70,7 @@ public class PeopleService {
             person.get().getBooks().forEach(book -> {
                 long diffInMillies = Math.abs(book.getTakenAt().getTime() - new Date().getTime());
                 // 864000000 милисекунд = 10 суток
-                if (diffInMillies > 864000000)
+                if (diffInMillies > 82800000)
                     book.setExpired(true); // книга просрочена
             });
 

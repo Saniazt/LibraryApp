@@ -13,13 +13,15 @@
         <th style="width:30%;">Taken by</th>
     </tr>
     <tbody>
-    <tr th:each="book: ${expiredBooks}" th:if="${book.isExpired()}" >
+    <tr th:each="book: ${expiredBooks}" >
         <td style="text-align: center" th:text="${book.getId()}"/>
         <td>
             <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"/>
         </td>
         <td th:text="${book.getTakenAt()}"/>
-        <td th:text="${book.getOwner()}"/>
+        <td>
+            <a th:href="@{/people/{id}(id=${book.getOwner().getId()})}" th:text="${book.getOwner()}"/>
+        </td>
     </tr>
     </tbody>
 </table>
