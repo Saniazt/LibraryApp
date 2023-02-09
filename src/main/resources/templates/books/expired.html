@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Expired books</title>
 </head>
 <body>
-<button.><a href="/books/new">Add new Book &#128214;</a></button.>
-<button><a href="/people">Go to People &#129488;</a></button>
-<button><a href="/books/search">Book search &#128270;</a></button>
 <table class="table table-bordered table-striped" style="width:60%; text-align:center; vertical-align:10px;">
     <tr>
         <th style="width:10%;">ID</th>
@@ -17,16 +13,15 @@
         <th style="width:30%;">Taken by</th>
     </tr>
     <tbody>
-    <tr th:each="book: ${books}">
+    <tr th:each="book: ${expiredBooks}" th:if="${book.isExpired()}" >
         <td style="text-align: center" th:text="${book.getId()}"/>
         <td>
             <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"/>
         </td>
-        <td th:text="${book.getAuthor()}"/>
+        <td th:text="${book.getTakenAt()}"/>
         <td th:text="${book.getOwner()}"/>
     </tr>
     </tbody>
 </table>
-<hr/>
 </body>
 </html>

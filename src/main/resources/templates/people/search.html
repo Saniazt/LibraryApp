@@ -3,32 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
 
-<form th:method="POST" th:action="@{/people/search}">
-    <label for="query">Enter search parameters </label>
-    <input type="text" id="query" name="query"/>
-    <br/>
-    <input type="submit" value="Search!"/>
-</form>
-<a href="/people">Return to people</a>
-</br>
-<a href="/books">Return to books</a>
-</br>
-<hr>
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+</style>
+<body>
+<ul>
+    <li><a href="/people">Return to people &#129488;</a></li>
+    <li><a href="/books">Go to Books &#128214;</a></li>
+</ul>
+<div class="topnav">
+    <div class="people/search">
+        <form th:method="POST" th:action="@{/people/search}">
+            <label for="query">Enter name to find: </label>
+            <input type="text" id="query" name="query" required
+                   minlength="3" maxlength="10" />
+            <input type="submit" value="Search!"/>
+        </form>
+    </div>
+</div>
 <div th:if="${people}">
     <div th:if="${people.isEmpty()}">
         <span>No person found</span>
     </div>
+    <label>
+        <h3>Search results:</h3>
+    </label>
+</div>
+    <table class="table table-bordered table-striped" style="width:50%; text-align:center; vertical-align:10px;">
+    <tr>
+        <th style="width:25%;">ID</th>
+        <th style="width:50%;">Full Name</th>
+        <th style="width:25%;">Year Of Birth</th>
+    </tr>
+    <tbody>
+    <tr th:each="person: ${people}">
+        <td style="text-align: center" th:text="${person.getId()}"/>
+        <td>
+            <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName()}"/>
+        </td>
+        <td th:text="${person.getYearOfBirth()}"/>
+    </tr>
+    </tbody>
+</table>
 
-    <div th:each="person : ${people}">
-        <a th:href="@{/people/{id}(id=${person.getId()})}"
-           th:text="${person.getFullName()}">person</a>
-        <a th:text="${person.stringOfBooks()}">person</a>
-    </div>
-
-        <hr/>
-
-</div>></body>
+</div></body>
 </html>

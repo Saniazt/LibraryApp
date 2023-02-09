@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models.Book;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models.Person;
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -119,10 +120,17 @@ public class BooksController {
     public String searchPage(){
         return "books/search";
     }
+
     @PostMapping("/search")
     public String makeSearchPage(Model model, @RequestParam("query") String query){
       //  model.addAttribute("books", bookService.searchByTitleNam(query));
        model.addAttribute("books", bookDAO.findByTitleOfBooks(query));
         return "books/search";
+    }
+
+    @GetMapping("/expired")
+    public String expiredBooks(Model model){
+        model.addAttribute("expiredBooks",bookRepository.findAll());
+        return "books/expired";
     }
 }
