@@ -44,11 +44,14 @@
         </form>
     </div>
 </div>
-<table class="table table-bordered table-striped" style="width:50%; text-align:center; vertical-align:10px;">
+<table class="table table-bordered table-striped" style="width:75%; text-align:center; vertical-align:10px;">
     <tr>
-        <th style="width:25%;">ID</th>
-        <th style="width:50%;">Full Name</th>
-        <th style="width:25%;">Year Of Birth</th>
+        <th style="width:7%;">ID</th>
+        <th style="width:30%;">Full Name</th>
+        <th style="width:12%;">Year Of Birth</th>
+        <th style="width:15%;">Email</th>
+        <th style="width:15%;">Phone Number</th>
+        <th style="width:15%;">Actions</th>
     </tr>
     <tbody>
     <tr th:each="person: ${people}">
@@ -57,6 +60,16 @@
             <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName()}"/>
         </td>
         <td th:text="${person.getYearOfBirth()}"/>
+        <td th:text="${person.getEmail()}"/>
+        <td th:text="${person.getPhone()}"/>
+        <td>
+            <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+                <input type="submit" value="Edit"/>
+            </form>
+            <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

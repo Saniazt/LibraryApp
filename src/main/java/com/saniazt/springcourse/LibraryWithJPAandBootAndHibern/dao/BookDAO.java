@@ -29,7 +29,9 @@ public class BookDAO {
     public List<Book> findByTitleOfBooks(String str){
         Session session = entityManager.unwrap(Session.class);
         List<Book> list1 =  new ArrayList<>
-                (session.createNativeQuery("SELECT * FROM book WHERE title LIKE '%" + str + "%' OR author LIKE '%" + str + "%'"
+                (session.createNativeQuery("SELECT * FROM book " +
+                                        "WHERE UPPER(title) LIKE UPPER('%" + str +"%') " +
+                                        "OR UPPER(author) LIKE UPPER('%" + str + "%')"
                         ,Book.class)
                         .getResultList()
                 );

@@ -29,7 +29,8 @@ public class PersonDAO {
     public List<Person> findByPersonName(String str){
         Session session = entityManager.unwrap(Session.class);
         List<Person> list1 =  new ArrayList<>
-                (session.createNativeQuery("SELECT * FROM person WHERE UPPER(full_name) LIKE UPPER('%" + str + "%')"
+                (session.createNativeQuery("SELECT * FROM person " +
+                                        "WHERE UPPER(full_name) LIKE UPPER('%" + str + "%')"
                                 ,Person.class)
                         .getResultList()
                 );
