@@ -5,11 +5,38 @@
     <title>Index</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+</style>
 <body>
-<button><a href="/books/new">Add new Book &#128214;</a></button>
-<button><a href="/people">Go to People &#129488;</a></button>
-<button><a href="/books/search">Book search &#128270;</a></button>
-<button><a href="/books/expired">Expired books &#128271;</a></button>
+<ul>
+    <li><a href="/books/new">Add new Book &#128214;</a></li>
+    <li><a href="/people">Go to People &#129488;</a></li>
+    <li><a href="/books/search">Book search &#128270;</a></li>
+    <li><a href="/books/expired">Expired books &#128271;</a></li>
+</ul>
 <table class="table table-bordered table-striped" style="width:60%; text-align:center; vertical-align:10px;">
     <tr>
         <th style="width:10%;">ID</th>
