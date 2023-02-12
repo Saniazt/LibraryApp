@@ -96,13 +96,18 @@ public class BookService {
        List<Book> allBooks = bookRepository.findAll().stream().toList();
        List<Book> expiredBooks = new ArrayList<>();
        long currentTime =  new Date().getTime();
-       for(int i=0;i<allBooks.size();i++){
-           long takenTime = allBooks.get(i).getTakenAt().getTime();
-           long so = currentTime-takenTime;
-           if (so>82800000) {
-               expiredBooks.add(allBooks.get(i));
-               allBooks.get(i).setExpired(true);
-           } // allBooks.get(i).setExpired(true);
+      loop1: for(int i=0;i<allBooks.size();i++){
+           try{
+               long takenTime = allBooks.get(i).getTakenAt().getTime();
+               long so = currentTime-takenTime;
+               if (so>82800000) {
+                   expiredBooks.add(allBooks.get(i));
+                   allBooks.get(i).setExpired(true);
+               }
+           } catch (NullPointerException nullPointerException) {
+               continue loop1;
+           }
+            // allBooks.get(i).setExpired(true);
        } return expiredBooks;
     }
 }
