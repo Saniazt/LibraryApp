@@ -27,14 +27,13 @@ public class ExcelReport {
 
         //Connect to database
         String url = "jdbc:postgresql://localhost:5432/library_app_jpa_hiber";
-        try {
-            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
             try {
                 Connection conn = DriverManager.getConnection(url,"postgres","postgres");
                 Statement sta = conn.createStatement();
 
                 //Select table from the database
-                ResultSet resultSet = sta.executeQuery("select * from books");
+                ResultSet resultSet = sta.executeQuery("select * from book");
                 JdbcAdapter jdbcAdapter = new JdbcAdapter();
 
                 //Export data from database to datatable
@@ -45,9 +44,7 @@ public class ExcelReport {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+
 
         //Write datatable to the worksheet
         sheet.insertDataTable(dataTable, true, 1, 1);
@@ -56,6 +53,8 @@ public class ExcelReport {
         sheet.getAllocatedRange().autoFitColumns();
 
         //Save to an Excel file
-        wb.saveToFile("output/ExportToExcel.xlsx", ExcelVersion.Version2016);
+        wb.saveToFile("util/ExportToExcel.xlsx", ExcelVersion.Version2016);
+
+
     }
 }
