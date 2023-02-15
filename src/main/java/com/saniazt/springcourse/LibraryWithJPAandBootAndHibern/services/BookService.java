@@ -83,7 +83,7 @@ public class BookService {
         bookRepository.findById(id).ifPresent(
                 book -> {
                     book.setOwner(selectedPerson);
-                    book.setTakenAt(new Date()); // текущее время
+                    book.setTakenAt(new Date()); // current time
                 }
         );
     }
