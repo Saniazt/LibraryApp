@@ -26,12 +26,13 @@ public class PersonDAO {
 
     @Transactional(readOnly = true)
     @Query(nativeQuery = true)
-    public List<Person> findByPersonName(String str){
+    public List findByPersonName(String str){
         Session session = entityManager.unwrap(Session.class);
-        List<Person> list1 =  new ArrayList<>
+        List list1 =  new ArrayList<>
                 (session.createNativeQuery("SELECT * FROM person " +
-                                        "WHERE UPPER(full_name) LIKE UPPER('%" + str + "%')"
+                                        "WHERE UPPER(full_name) LIKE CONCAT('%',UPPER(?),'%')"
                                 ,Person.class)
+                        .setParameter(1, str)
                         .getResultList()
                 );
         return (list1.isEmpty()) ? null : list1;

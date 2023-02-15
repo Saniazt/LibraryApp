@@ -30,8 +30,8 @@ public class BookDAO {
         Session session = entityManager.unwrap(Session.class);
         List<Book> list1 =  new ArrayList<>
                 (session.createNativeQuery("SELECT * FROM book " +
-                                        "WHERE UPPER(title) LIKE UPPER('%?%') " +
-                                        "OR UPPER(author) LIKE UPPER('%?%')"
+                                        "WHERE UPPER(title) LIKE CONCAT('%',UPPER(?),'%') " +
+                                        "OR UPPER(author) LIKE CONCAT('%',UPPER(?),'%')"
                         ,Book.class)
                         .setParameter(1,str)
                         .setParameter(2,str)
