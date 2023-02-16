@@ -52,9 +52,14 @@ public class ExcelReport {
         //Auto fit column width
         sheet.getAllocatedRange().autoFitColumns();
 
-        //Save to an Excel file
-        wb.saveToFile("util/ExportToExcel.xlsx", ExcelVersion.Version2016);
+        // Get the current user's home directory
+        String homeDir = System.getProperty("user.home");
 
+// Append the relative path to the desktop
+        String desktopPath = homeDir + "/Desktop";
+        //Save to an Excel file
+        //wb.saveToFile("util/ExportToExcel.xlsx", ExcelVersion.Version2016);
+        wb.saveToFile(desktopPath+"/ExportToExcel.xlsx", ExcelVersion.Version2016);
 
     }
 }
