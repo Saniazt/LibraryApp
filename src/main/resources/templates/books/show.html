@@ -3,40 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Show</title>
+    <title>Show Book Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        body {
+            background-color: #f2f2f2;
+        }
+        p {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .book-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .book-info span {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 20px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        select {
+            font-size: 16px;
+            padding: 10px;
+            margin-right: 20px;
+        }
+        input[type="submit"] {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
 </head>
 <body>
-<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">VALUE</p>
-
-<div th:if="${owner}">
-    <span>Книга сейчас у: </span> <span th:text="${owner.getFullName()}">Person Name</span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand animated-link" href="/people">Go to People &#129488;</a>
+    <a class="navbar-brand animated-link" href="/books">Go to Books &#128214;</a>
+</nav>
+<p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book Information</p>
+<div class="book-info" th:if="${owner}">
+    <span>Person took the book:</span>
+    <span th:text="${owner.getFullName()}">Person Name</span>
 
     <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
-        <input type="submit" value="Release the book!"/>
+        <div class="form-group">
+            <input type="submit" value="Release the book!"/>
+        </div>
     </form>
 </div>
 
-<div th:if="${people}">
+<div class="book-info" th:if="${people}">
     <span>The book is free. Would you like to assign it to someone?</span>
     <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
-        <label for="person">Choose the person</label>
-        <select th:object="${person}" th:field="*{id}" id="person">
-            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
-            </option>
-        </select>
-        <input type="submit" value="Assign the book!"/>
+        <div class="form-group">
+            <label for="person">Choose the person:</label>
+            <select th:object="${person}" th:field="*{id}" id="person">
+                <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+                </option>
+            </select>
+            <input type="submit" value="Assign the book!"/>
+        </div>
     </form>
 </div>
 
 <hr/>
 
-<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
-    <input type="submit" value="Редактировать"/>
-</form>
-
-<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
-    <input type="submit" value="Удалить"/>
-</form>
-
+<div class="form-group">
+    <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+        <input type="submit" value="Edit"/>
+    </form>
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
 </body>
 </html>

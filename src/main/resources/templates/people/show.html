@@ -1,37 +1,112 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Show</title>
+    <title>Show Person</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0077b6;
+            color: white;
+            padding: 10px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        th {
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+        td span {
+            display: block;
+        }
+        .expired {
+            color: red;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            padding: 5px 10px;
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #023e8a;
+        }
+    </style>
 </head>
 <body>
-<p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand animated-link" href="/people">Go to People &#129488;</a>
+    <a class="navbar-brand animated-link" href="/books">Go to Books &#128214;</a>
+</nav>
+<header>
+    <h1 th:text="${person.getFullName() + ' (' + person.getYearOfBirth() + ')'}">Person Details</h1>
+</header>
+<main>
+    <div th:if="${books.isEmpty()}">
+        <p>No books have been picked up yet.</p>
+        <hr/>
+    </div>
 
-<div th:if="${books.isEmpty()}">
-    <p>Person hasn't picked up any books yet</p>
-    <hr/>
-</div>
+    <div th:if="${!books.isEmpty()}">
+        <hr/>
+        <h2>Books:</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Taken At</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td><span th:text="${book.getTitle()}"></span></td>
+                <td><span th:text="${book.getAuthor()}"></span></td>
+                <td><span th:text="${book.getYear()}"></span></td>
+                <td><span th:text="${book.getTakenAt()}"></span></td>
+                <td>
+                    <span th:text="${book.isExpired() ? 'Expired' : 'Not Expired'}"
+                          th:class="${book.isExpired() ? 'expired' : ''}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
 
-<div th:if="${!books.isEmpty()}">
-    <hr/>
-    <b>Books:</b>
-    <br/>
-    <table th:each="book : ${books}">
-        <tr>
-            <td>
-                <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()+', taken at: '+ book.getTakenAt()+', Is Expired?: '+ book.isExpired()}"
-                      th:style="${book.isExpired()} ? 'color: red' : 'color: black'">
-                    book
-                </span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
-</div>
-<div th:if="${!expired.isEmpty()}">
-    <hr/>
-    <b>Total books taken :</b> <span th:text="${expired[0]}"></span>
+    <div th:if="${!expired.isEmpty()}">
+        <hr/>
+        <p>
+            <b>Total books taken:</b> <span th:text="${expired[0]}"></span><br/>
     <b>Total expired :</b> <span th:text="${expired[1]}"></span>
     <br/>
 
@@ -43,5 +118,6 @@
     <input type="submit" value="Delete"/>
 </form>
 </div>
+</main>
 </body>
 </html>

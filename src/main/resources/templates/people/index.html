@@ -14,6 +14,15 @@
         .animated-link:focus {
             outline: none;
         }
+
+        .table th {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .table td {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -31,30 +40,30 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="thead-dark">
         <tr>
-            <th style="width:7%;" class="text-center">ID</th>
-            <th style="width:30%;" class="text-center">Full Name</th>
-            <th style="width:12%;" class="text-center">Year Of Birth</th>
-            <th style="width:15%;" class="text-center">Email</th>
-            <th style="width:15%;" class="text-center">Phone Number</th>
-            <th style="width:15%;" class="text-center">Actions</th>
+            <th style="width:7%;">ID</th>
+            <th style="width:30%;">Full Name</th>
+            <th style="width:12%;">Year Of Birth</th>
+            <th style="width:15%;">Email</th>
+            <th style="width:15%;">Phone Number</th>
+            <th style="width:15%;">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="person: ${people}">
             <td class="align-middle" th:text="${person.getId()}"></td>
-            <td class="align-middle">
+            <td class="align-middle font-weight-bold">
                 <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName()}"></a>
             </td>
             <td class="align-middle" th:text="${person.getYearOfBirth()}"></td>
             <td class="align-middle" th:text="${person.getEmail()}"></td>
             <td class="align-middle" th:text="${person.getPhone()}"></td>
-            <td>
+            <td class="align-middle">
                 <div class="btn-group">
                     <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button type="submit" class="btn btn-outline-primary mx-1">Edit</button>
                     </form>
                     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger mx-1">Delete</button>
                     </form>
                 </div>
             </td>
@@ -62,7 +71,6 @@
         </tbody>
     </table>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>

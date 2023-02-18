@@ -3,15 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Expired books</title>
+
+    <!-- Add Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Add custom CSS for animations -->
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            width: 60%;
+            animation: fade-in 1s;
+        }
+
+        th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-<table class="table table-bordered table-striped" style="width:60%; text-align:center; vertical-align:10px;">
-    <tr>
-        <th style="width:10%;">ID</th>
-        <th style="width:30%;">Title</th>
-        <th style="width:30%;">Taken at</th>
-        <th style="width:30%;">Taken by</th>
-    </tr>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand animated-link" href="/people">Go to People &#129488;</a>
+    <a class="navbar-brand animated-link" href="/books">Go to Books &#128214;</a>
+</nav>
+<div class="container mt-4">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th style="width:10%;">ID</th>
+            <th style="width:30%;">Title</th>
+            <th style="width:30%;">Taken at</th>
+            <th style="width:30%;">Taken by</th>
+        </tr>
+        </thead>
     <tbody>
     <tr th:each="book: ${expiredBooks}" >
         <td style="text-align: center" th:text="${book.getId()}"/>
