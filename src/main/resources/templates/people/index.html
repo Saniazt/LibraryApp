@@ -1,82 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .animated-link:hover {
+            transform: scale(1.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .animated-link:focus {
+            outline: none;
+        }
+    </style>
 </head>
-<style>
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #333;
-    }
 
-    li {
-        float: left;
-    }
-
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    li a:hover {
-        background-color: #111;
-    }
-</style>
 <body>
-<ul>
-    <li><a href="/people/new">Add new Person &#129488;</a></li>
-    <li><a href="/books">Go to Books &#128214;</a></li>
-</ul>
-<div class="topnav">
-    <div class="people/search">
-        <form th:method="POST" th:action="@{/people/search}">
-            <label for="query">Enter name to find: </label>
-            <input type="text" id="query" name="query"/>
-            <input type="submit" value="Search!"/>
-        </form>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand animated-link" href="/people/new">Add new Person &#129488;</a>
+    <a class="navbar-brand animated-link" href="/books">Go to Books &#128214;</a>
+    <form class="form-inline ml-auto my-2 my-lg-0" th:method="POST" th:action="@{/people/search}">
+        <input class="form-control mr-sm-2" type="text" placeholder="Enter name to find" id="query" name="query">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
+<div class="container mt-4">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width:7%;" class="text-center">ID</th>
+            <th style="width:30%;" class="text-center">Full Name</th>
+            <th style="width:12%;" class="text-center">Year Of Birth</th>
+            <th style="width:15%;" class="text-center">Email</th>
+            <th style="width:15%;" class="text-center">Phone Number</th>
+            <th style="width:15%;" class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person: ${people}">
+            <td class="align-middle" th:text="${person.getId()}"></td>
+            <td class="align-middle">
+                <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName()}"></a>
+            </td>
+            <td class="align-middle" th:text="${person.getYearOfBirth()}"></td>
+            <td class="align-middle" th:text="${person.getEmail()}"></td>
+            <td class="align-middle" th:text="${person.getPhone()}"></td>
+            <td>
+                <div class="btn-group">
+                    <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<table class="table table-bordered table-striped" style="width:75%; text-align:center; vertical-align:10px;">
-    <tr>
-        <th style="width:7%;">ID</th>
-        <th style="width:30%;">Full Name</th>
-        <th style="width:12%;">Year Of Birth</th>
-        <th style="width:15%;">Email</th>
-        <th style="width:15%;">Phone Number</th>
-        <th style="width:15%;">Actions</th>
-    </tr>
-    <tbody>
-    <tr th:each="person: ${people}">
-        <td style="text-align: center" th:text="${person.getId()}"/>
-        <td>
-            <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFullName()}"/>
-        </td>
-        <td th:text="${person.getYearOfBirth()}"/>
-        <td th:text="${person.getEmail()}"/>
-        <td th:text="${person.getPhone()}"/>
-        <td>
-            <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-                <input type="submit" value="Edit"/>
-            </form>
-            <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-                <input type="submit" value="Delete"/>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<hr/>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
-
-
-
-
