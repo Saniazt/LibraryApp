@@ -1,6 +1,7 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.controllers;
 
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.BookDAO;
+import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.reports.BookReport;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.BookRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.PeopleRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.BookService;
@@ -25,16 +26,18 @@ public class BooksController {
     private final BookService bookService;
     private final PeopleService peopleService;
     private final BookDAO bookDAO;
+    private final BookReport bookReport;
 
 
 
     @Autowired
-    public BooksController(PeopleRepository peopleRepository, BookRepository bookRepository, BookService bookService, PeopleService peopleService, BookDAO bookDAO) {
+    public BooksController(PeopleRepository peopleRepository, BookRepository bookRepository, BookService bookService, PeopleService peopleService, BookDAO bookDAO, BookReport bookReport) {
         this.peopleRepository = peopleRepository;
         this.bookRepository = bookRepository;
         this.bookService = bookService;
         this.peopleService = peopleService;
         this.bookDAO = bookDAO;
+        this.bookReport = bookReport;
     }
 
 
@@ -132,5 +135,11 @@ public class BooksController {
     public String expiredBooks(Model model){
         model.addAttribute("expiredBooks",bookService.findExpired());
         return "books/expired";
+    }
+
+    @GetMapping("/report")
+    public String reportBooks(){
+        bookReport.createReport();
+        return "redirect:/books";
     }
 }
