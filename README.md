@@ -7,6 +7,7 @@ Features:
 - Track book loans and returns
 - Generate reports on book loans and returns
 - Search for books and visitors by various criteria
+
 Technologies Used
 - Java 
 - Spring Framework
@@ -16,6 +17,7 @@ Technologies Used
 - HTML
 - CSS
 - PostgreSQL database
+
 Installation
 - Clone the repository.
 - Install PostgreSQL database.
@@ -24,5 +26,6 @@ Installation
 - Configure the database connection in application.properties.
 - Build the application using mvn clean package.
 - Run the application using java -jar target/library-app.jar.
+
 Getting Started
 To get started with the application, simply access the application URL(localhost) in your web browser. From there, you can use the various features and functions of the application.
