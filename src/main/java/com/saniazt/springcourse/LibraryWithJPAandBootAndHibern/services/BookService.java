@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
@@ -112,5 +113,14 @@ public class BookService {
            }
             // allBooks.get(i).setExpired(true);
        } return expiredBooks;
+    }
+
+    public Book randomBook() {
+        int bookMaxId = bookRepository.findAll().stream().mapToInt(Book::getId).max().orElse(0);
+        int randomNum;
+        do {
+            randomNum = ThreadLocalRandom.current().nextInt(1, bookMaxId);
+        } while (bookRepository.findById(randomNum).isEmpty());
+        return bookRepository.findById(randomNum).orElse(null);
     }
 }

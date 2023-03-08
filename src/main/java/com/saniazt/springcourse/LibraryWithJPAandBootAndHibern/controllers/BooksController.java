@@ -142,4 +142,11 @@ public class BooksController {
         bookReport.createReport();
         return "redirect:/books";
     }
+
+    @GetMapping("/randomBook")
+    public String randomBook(Model model){
+        Book book = bookService.randomBook();
+       model.addAttribute("randomBook",book) ;
+        return "redirect:/books/"+book.getId();
+    }
 }

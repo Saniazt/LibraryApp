@@ -1,41 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Expired books</title>
+    <!-- Add Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Add custom CSS for animations -->
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            width: 60%;
+            animation: fade-in 1s;
+        }
+
+        th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-
-<form th:method="POST" th:action="@{/books/search}">
-    <label for="query">Enter search parameters </label>
-    <input type="text" id="query" name="query"/>
-    <br/>
-    <input type="submit" value="Search!"/>
-</form>
-<a href="/people">Return to people</a>
-</br>
-<a href="/books">Return to books</a>
-</br>
-<hr>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand animated-link" href="/people">Go to People &#129488;</a>
+    <a class="navbar-brand animated-link" href="/books">Go to Books &#128214;</a>
+</nav>
 <div th:if="${books}">
     <div th:if="${books.isEmpty()}">
         <span>No book found</span>
+        <div class="container mt-4">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="width:7%;" class="text-center">ID</th>
+                    <th style="width:30%;" class="text-center">Title</th>
+                    <th style="width:20%;" class="text-center">Author</th>
+                    <th style="width:30%;" class="text-center">Taken by</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="4" class="text-center"><em>Found 0 books</em></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    <div th:if="${not books.isEmpty()}">
+        <div class="container mt-4">
+            <h4 class="text-center mb-4">Found <span th:text="${books.size()}"></span> books</h4>
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="width:7%;" class="text-center">ID</th>
+                    <th style="width:30%;" class="text-center">Title</th>
+                    <th style="width:20%;" class="text-center">Author</th>
+                    <th style="width:30%;" class="text-center">Taken by</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book: ${books}" th:class="${book.id % 2 == 0} ? 'even' : 'odd'">
+                <td th:text="${book.getId()}"></td>
+                <td><a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a></td>
+                <td th:text="${book.getAuthor()}"></td>
+                <td th:text="${book.getOwner()}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-    <div th:each="book : ${books}">
-        <a th:href="@{/books/{id}(id=${book.getId()})}"
-           th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
-
-        <div th:if="${book.getOwner() != null}">
-            <span>The book is now assigned: </span> <span th:text="${book.getOwner().getFullName()}">Person Name</span>
-            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
-                <input type="submit" value="Release the book!"/>
-            </form>
-        </div>
-
-        <div th:if="${book.getOwner() == null}">
-            <span>The book is free now</span>
-        </div>
 
         <hr/>
     </div>
