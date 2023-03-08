@@ -44,7 +44,7 @@ public class BooksController {
     @GetMapping()
     public String index(Model model,
                         @RequestParam(value="page", required = false) Integer page,
-                        @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
+                        @RequestParam(value = "books_per_page", required = false,defaultValue = "15") Integer booksPerPage,
                         @RequestParam(value = "sort_by_year", required = false) boolean sortByYear
     ) {
         if (page==null || booksPerPage ==null){

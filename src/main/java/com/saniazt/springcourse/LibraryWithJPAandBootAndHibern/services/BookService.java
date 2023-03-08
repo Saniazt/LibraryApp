@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +31,7 @@ public class BookService {
             return bookRepository.findAll(Sort.by("year"));
         }
         else
-            return bookRepository.findAll();
+            return bookRepository.findAll().stream().sorted(Comparator.comparingInt(Book::getId)).collect(Collectors.toList());
     }
 
     public  Book findOne(int id){
@@ -42,11 +39,14 @@ public class BookService {
         return foundedBook.orElse(null);
     }
 
-    public List<Book> findWithPagination(Integer page, Integer bookPerPage, boolean sortByYear){
-        if (sortByYear)
-            return bookRepository.findAll(PageRequest.of(page, bookPerPage, Sort.by("year"))).getContent();
-        else
-            return bookRepository.findAll(PageRequest.of(page, bookPerPage)).getContent();
+    public List<Book> findWithPagination(int page, int booksPerPage, boolean sortByYear) {
+        int startIndex = (page - 1) * booksPerPage;
+        int endIndex = startIndex + booksPerPage;
+        List<Book> books = findAll(sortByYear);
+        if (endIndex > books.size()) {
+            endIndex = books.size();
+        }
+        return books.subList(startIndex, endIndex);
     }
     public List<Book> searchByTitleNam(String query){
        // return bookRepository.searchByTitle(query);

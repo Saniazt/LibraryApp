@@ -85,6 +85,7 @@
                 <th>Year</th>
                 <th>Taken At</th>
                 <th>Status</th>
+                <th>Release the book</th>
             </tr>
             </thead>
             <tbody>
@@ -96,6 +97,11 @@
                 <td>
                     <span th:text="${book.isExpired() ? 'Expired' : 'Not Expired'}"
                           th:class="${book.isExpired() ? 'expired' : ''}"></span>
+                </td>
+                <td>
+                    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+                        <button type="submit">Release the book</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
