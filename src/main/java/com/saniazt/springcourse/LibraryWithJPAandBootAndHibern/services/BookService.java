@@ -43,15 +43,18 @@ public class BookService {
         int startIndex = (page - 1) * booksPerPage;
         int endIndex = startIndex + booksPerPage;
         List<Book> books = findAll(sortByYear);
+        int maxPage = (int) Math.ceil((double) books.size() / booksPerPage);
+        if (startIndex >= books.size()) {
+            int lastPage = (int) Math.ceil((double) books.size() / booksPerPage);
+            startIndex = (lastPage - 1) * booksPerPage;
+            endIndex = startIndex + booksPerPage;
+        }
         if (endIndex > books.size()) {
             endIndex = books.size();
         }
         return books.subList(startIndex, endIndex);
     }
-    public List<Book> searchByTitleNam(String query){
-       // return bookRepository.searchByTitle(query);
-         return bookDAO.findByTitleOfBooks(query);
-    }
+
 
     @Transactional
     public void save(Book book){
