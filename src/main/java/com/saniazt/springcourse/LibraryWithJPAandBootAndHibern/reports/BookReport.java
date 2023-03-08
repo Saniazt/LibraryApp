@@ -1,4 +1,5 @@
 package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.reports;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,13 +10,11 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.auditing.CurrentDateTimeProvider;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,7 +29,7 @@ public class BookReport {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        Workbook workbook = new HSSFWorkbook();
+        Workbook workbook = new XSSFWorkbook();
 
         try {
             Class.forName(DB_DRIVER);
@@ -42,35 +41,45 @@ public class BookReport {
             Sheet sheet = workbook.createSheet("Data");
             int rowNum = 0;
 
+            Row headerRow = sheet.createRow(rowNum++);
+            headerRow.createCell(0).setCellValue("ID");
+            headerRow.createCell(1).setCellValue("Title");
+            headerRow.createCell(2).setCellValue("Author");
+
+
             while (rs.next()) {
                 Row row = sheet.createRow(rowNum++);
-                int colNum = 0;
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    Cell cell = row.createCell(colNum++);
-                    cell.setCellValue(rs.getString(i));
-                }
+                row.createCell(0).setCellValue(rs.getLong("id"));
+                row.createCell(1).setCellValue(rs.getString("title"));
+                row.createCell(2).setCellValue(rs.getString("author"));
+
             }
+
             LocalDateTime myDateObj = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm");
             String formattedDate = myDateObj.format(myFormatObj);
 
-            FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.home") + "/Desktop/data "+formattedDate+".xls");
+            String filePath = System.getProperty("user.home") + "/Desktop/data_" + formattedDate + ".xlsx";
+            FileOutputStream outputStream = new FileOutputStream(filePath);
             workbook.write(outputStream);
             workbook.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
-                stmt.close();
-                conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 }
+
