@@ -23,12 +23,7 @@ public class PeopleService {
     }
 
     public List<Person> findAll() {
-        return peopleRepository.findAll().stream().sorted(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return Integer.compare(o1.getId(), o2.getId());
-            }
-        }).collect(Collectors.toList());
+        return peopleRepository.findAll().stream().sorted(Comparator.comparingInt(Person::getId)).collect(Collectors.toList());
     }
 
     public Person findOne(int id) {
