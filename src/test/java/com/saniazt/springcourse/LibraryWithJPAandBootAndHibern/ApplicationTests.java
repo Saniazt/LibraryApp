@@ -1,4 +1,4 @@
-package com.saniazt.springcourse.LibraryJPA.Hiber.Boot;
+package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

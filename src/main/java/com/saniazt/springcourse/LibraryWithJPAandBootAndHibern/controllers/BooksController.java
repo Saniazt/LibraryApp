@@ -2,7 +2,6 @@ package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.controllers;
 
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.BookDAO;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.reports.BookReport;
-import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.BookRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.repositories.PeopleRepository;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.BookService;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleService;
@@ -21,23 +20,20 @@ import javax.validation.Valid;
 @RequestMapping("/books")
 public class BooksController {
 
-    private final PeopleRepository peopleRepository;
-    private final BookRepository bookRepository;
+
     private final BookService bookService;
-    private final PeopleService peopleService;
     private final BookDAO bookDAO;
     private final BookReport bookReport;
+    private final PeopleService peopleService;
 
 
 
     @Autowired
-    public BooksController(PeopleRepository peopleRepository, BookRepository bookRepository, BookService bookService, PeopleService peopleService, BookDAO bookDAO, BookReport bookReport) {
-        this.peopleRepository = peopleRepository;
-        this.bookRepository = bookRepository;
+    public BooksController(BookService bookService, BookDAO bookDAO, BookReport bookReport, PeopleService peopleService) {
         this.bookService = bookService;
-        this.peopleService = peopleService;
         this.bookDAO = bookDAO;
         this.bookReport = bookReport;
+        this.peopleService = peopleService;
     }
 
 
@@ -65,7 +61,7 @@ public class BooksController {
         if (bookOwner != null)
             model.addAttribute("owner", bookOwner);
         else
-            model.addAttribute("people", peopleRepository.findAll());
+            model.addAttribute("people", peopleService.findAll());
 
         return "books/show";
     }
