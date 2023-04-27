@@ -28,5 +28,5 @@ jobs:
        tags: latest
        registry: docker.io
        dockerfile: Dockerfile
-       username: Saniazt
+       username: saniazt
        password: Liop1mane
