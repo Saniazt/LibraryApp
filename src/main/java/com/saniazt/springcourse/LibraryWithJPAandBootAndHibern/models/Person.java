@@ -4,6 +4,7 @@ package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.models;
 
 
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
@@ -16,24 +17,30 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "person")
+@Schema(description = "Person Info: ")
 public class Person {
     @Id
+    @Schema(description = "person id: ")
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "full_name")
+    @Schema(description = "person name: ")
     private String fullName;
 
     @Column(name = "year_of_birth")
+    @Schema(description = "Year of birth: ")
     private int yearOfBirth;
 
     @Column(name = "email")
+    @Schema(description = "Email: ")
     @Email(message = "Please enter valid email")
     @NotEmpty(message = "Please enter valid email")
     private String email;
 
     @Column(name = "phone")
+    @Schema(description = "Phone Number: ")
     private String phone;
 
 

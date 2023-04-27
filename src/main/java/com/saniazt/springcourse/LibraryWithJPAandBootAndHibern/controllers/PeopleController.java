@@ -2,6 +2,9 @@ package com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.controllers;
 
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.dao.PersonDAO;
 import com.saniazt.springcourse.LibraryWithJPAandBootAndHibern.services.PeopleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
+@Tag(name = "person",description = "Methods for people controller")
 public class PeopleController {
 
 
@@ -27,13 +31,15 @@ public class PeopleController {
 
 
     @GetMapping()
+    @Operation(summary ="Find all people")
     public String index(Model model) {
         model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    @Operation(summary ="Find exactly person using id")
+    public String show(@Parameter(description = "user id") @PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.findOne(id));
         model.addAttribute("books", peopleService.getBooksByPersonId(id));
         model.addAttribute("expired",peopleService.totalPlusExpired(id));
