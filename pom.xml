@@ -15,6 +15,7 @@
 	<description>LibraryJPAWithHiberWithBoot</description>
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.release>8</maven.compiler.release>
 	</properties>
 	<repositories>
 		<repository>
@@ -44,16 +45,15 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>5.0.0</version>
+			<version>3.9</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>
 			<groupId>e-iceblue</groupId>
 			<artifactId>spire.xls</artifactId>
 			<version>12.8.4</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -66,7 +66,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.14</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-jaxrs2</artifactId>
+			<version>2.1.10</version>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -87,27 +97,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>com.coveo</groupId>
-				<artifactId>fmt-maven-plugin</artifactId>
-				<version>2.9</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
 				<configuration>
-					<sourceDirectory>src/main/java</sourceDirectory>
-					<testSourceDirectory>src/test/java</testSourceDirectory>
-					<verbose>false</verbose>
-					<filesNamePattern>.*\.java</filesNamePattern>
-					<skip>false</skip>
-					<skipSortingImports>false</skipSortingImports>
-					<style>google</style>
+					<source>16</source>
+					<target>16</target>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
+		<finalName>library-app-images</finalName>
 	</build>
 
 </project>

@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -45,6 +44,8 @@ public class BookReport {
             headerRow.createCell(0).setCellValue("ID");
             headerRow.createCell(1).setCellValue("Title");
             headerRow.createCell(2).setCellValue("Author");
+            headerRow.createCell(3).setCellValue("taken_at");
+            headerRow.createCell(4).setCellValue("person_id");
 
 
             while (rs.next()) {
@@ -52,6 +53,8 @@ public class BookReport {
                 row.createCell(0).setCellValue(rs.getLong("id"));
                 row.createCell(1).setCellValue(rs.getString("title"));
                 row.createCell(2).setCellValue(rs.getString("author"));
+                row.createCell(3).setCellValue(rs.getString("taken_at"));
+                row.createCell(4).setCellValue(rs.getString("person_id"));
 
             }
 
