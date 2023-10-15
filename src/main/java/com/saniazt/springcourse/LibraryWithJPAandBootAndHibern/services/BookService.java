@@ -118,9 +118,12 @@ public class BookService {
     public Book randomBook() {
         int bookMaxId = bookRepository.findAll().stream().mapToInt(Book::getId).max().orElse(0);
         int randomNum;
+        Book randomBook;
         do {
             randomNum = ThreadLocalRandom.current().nextInt(1, bookMaxId);
-        } while (bookRepository.findById(randomNum).isEmpty());
-        return bookRepository.findById(randomNum).orElse(null);
+            randomBook = bookRepository.findById(randomNum).orElse(null);
+        } while (randomBook == null || randomBook.getOwner() != null);
+        return randomBook;
     }
+
 }
